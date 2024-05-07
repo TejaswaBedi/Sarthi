@@ -7,7 +7,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-
+const path = require("path");
 const companyRouter = require("./routes/Company");
 const noticeRouter = require("./routes/Notice");
 const userRouter = require("./routes/User");
@@ -29,8 +29,8 @@ opts.secretOrKey = "qwertyuiopasdfghjklzxcvbnmIsTheSecretKey";
 const server = express();
 
 //Middlewares
-server.use("/files", express.static("files"));
-server.use(express.static("build"));
+server.use("/files", express.static(path.resolve(__dirname, "files")));
+server.use(express.static(path.resolve(__dirname, "build")));
 server.use(cors());
 server.use(cookieParser());
 server.use(express.json());
