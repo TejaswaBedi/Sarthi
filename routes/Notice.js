@@ -5,9 +5,21 @@ const {
   fetchNoticeById,
   updateNotice,
 } = require("../controller/Notice");
-const { upload } = require("../upload");
 
 const router = express.Router();
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./files");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 router.get("/", fetchAllNotices);
 router.post("/", upload.array("noticeAttachs"), createNotice);
